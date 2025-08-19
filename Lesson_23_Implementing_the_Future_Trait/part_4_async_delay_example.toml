@@ -1,0 +1,8 @@
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+#[tokio::main]
+async fn main() {
+    let delay_future = Delay::new(std::time::Duration::from_secs(3));
+    delay_future.await; // This will pause the task for 3 seconds
+    println!("Delay completed!");
+}
