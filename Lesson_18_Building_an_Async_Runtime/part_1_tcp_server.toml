@@ -1,0 +1,32 @@
+[dependencies]
+mio = "0.8"
+use mio::{Events, Interest, Poll, Token};
+use mio::net::TcpListener;
+use std::net::SocketAddr;
+
+const SERVER: Token = Token(0);
+
+fn main() -> std::io::Result<()> {
+    let addr = "127.0.0.1:8080".parse::<SocketAddr>()?;
+    let listener = TcpListener::bind(&addr)?;
+
+    let mut poll = Poll::new()?;
+    poll.registry().register(&listener, SERVER, Interest::READable)?;
+
+    let mut events = Events::with_capacity(128);
+
+    loop {
+        poll.poll(&mut events, None)?;
+
+        for event in events.iter() {
+            match event.token() {
+                SERVER => {
+                    // Handle incoming TCP connection
+                    let (socket, addr) = listener.accept()?;
+                    println!("New connection from {:?}", addr);
+                },
+                _ => unreachable!(),
+            }
+        }
+    }
+}
