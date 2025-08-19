@@ -1,0 +1,6 @@
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+#[tokio::main]
+async fn main() {
+    long_running_task().await; // Call our asynchronous function
+}
