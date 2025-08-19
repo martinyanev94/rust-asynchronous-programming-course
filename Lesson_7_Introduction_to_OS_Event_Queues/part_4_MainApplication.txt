@@ -1,0 +1,9 @@
+#import <Cocoa/Cocoa.h>
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        NSApplication *app = [NSApplication sharedApplication];
+        [app run]; // Start the application's event loop
+    }
+    return 0;
+}
