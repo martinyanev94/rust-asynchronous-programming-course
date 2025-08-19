@@ -1,0 +1,11 @@
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+use tokio::net::TcpStream;
+use std::io::{self, Write};
+
+async fn fetch_data() -> io::Result<()> {
+    let stream = TcpStream::connect("127.0.0.1:8080").await?;
+    
+    writeln!(stream, "GET /").await?;
+    Ok(())
+}
